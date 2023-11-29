@@ -1,0 +1,21 @@
+# This file should be copied to /etc/systemd/system/
+# Then run the following commands:
+#     sudo systemctl daemon-reload            # reloads the daemon service to pick up the new service
+#     sudo systemctl enable monitor.service   # enables the service to be started on startup
+#     sudo systemctl start monitor.service    # starts the service immediately
+#     sudo systemctl stop monitor.service     # stops the service immediately
+
+Description="Sixfifty Monitoring Service"
+
+Wants=network.target
+After=syslog.target network-online.target
+
+[Service]
+Type=simple
+ExecStart="/home/ec2-user/monitor/monitor"
+Restart=on-failure
+RestartSec=10
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
